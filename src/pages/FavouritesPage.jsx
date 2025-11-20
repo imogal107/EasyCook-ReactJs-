@@ -3,7 +3,15 @@ import Card from "../components/Card";
 import { getRandomColor } from "../lib/utils";
 
 const FavouritesPage = () => {
-  const favourites = JSON.parse(localStorage.getItem("favourites")) || [];
+  const rawFavourites = JSON.parse(localStorage.getItem("favourites")) || [];
+
+  // remove duplicates by idMeal
+  const favourites = Array.from(
+    new Map(rawFavourites.map((m) => [m.idMeal, m])).values()
+  );
+  console.log("Favorites : " , favourites);
+  
+
   return (
     <div className=" flex-1 p-10 min-h-screen bg-slate-200">
       <div className=" max-w-screen-lg mx-auto">
@@ -12,15 +20,16 @@ const FavouritesPage = () => {
           <div className="flex flex-col items-center gap-4 h-[70vh]">
             <img src="/404.svg" alt="404 image" className="h-3/4" />
           </div>
-        )} 
-          <div className="border-2 grid justify-center items-center grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 w-full  pl-2 pr-6 ">
-            {
-              favourites.map((recipe)=>(
-                <Card key={recipe.label} recipe={recipe} {...getRandomColor()}/>               
-              ))
-            }
-          </div>
-       
+        )}
+        <div className="border-2 grid justify-center items-center grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 w-full  pl-2 pr-6 ">
+          {favourites.map((meal, index) => (
+            <Card
+              key={meal.idMeal || index}
+              recipe={meal}
+              {...getRandomColor()}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );
