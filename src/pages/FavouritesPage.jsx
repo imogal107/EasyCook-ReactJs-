@@ -1,6 +1,4 @@
-import React from "react";
 import Card from "../components/Card";
-import { getRandomColor } from "../lib/utils";
 
 const FavouritesPage = () => {
   const rawFavourites = JSON.parse(localStorage.getItem("favourites")) || [];
@@ -26,7 +24,6 @@ const FavouritesPage = () => {
             <Card
               key={meal.idMeal || index}
               recipe={meal}
-              {...getRandomColor()}
             />
           ))}
         </div>
