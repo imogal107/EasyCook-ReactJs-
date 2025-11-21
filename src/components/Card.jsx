@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { Soup, Heart, HeartPulse, Badge } from "lucide-react";
+import { useState } from "react";
+import { Heart } from "lucide-react";
 import RecipeModal from "./RecipeModal";
-const Card = ({ recipe, bg, badge }) => {
+const Card = ({ recipe }) => {
 
   const [showRecipe, setShowRecipe] = useState(false);
 
@@ -34,13 +34,14 @@ const Card = ({ recipe, bg, badge }) => {
 
   return (
     <>
-    <div className={`card ${bg} w-full shadow-md m-4`}>
+    <div className={`card bg-slate-200 w-full shadow-md m-4`}>
       {/* <figure className="relative"> */}
 
         <div className=" skeleton absolute inset-0"  />
         <img
           src={recipe.strMealThumb}
           alt="Shoes"
+          loading="lazy"
           className="w-full h-40 object-cover cursor-pointer opacity-0 transition-opacity duration-500"
           onLoad={(e)=>{
             e.currentTarget.style.opacity=1;
@@ -68,10 +69,6 @@ const Card = ({ recipe, bg, badge }) => {
             />
           )}
         </div>
-
-        {/* <div className="flex absolute bottom-1 left-1 z-10 bg-slate-200 p-1 rounded-xl">
-          <Soup /> <span className=" ml-1 mr-1">{recipe.yield} servings</span>
-        </div> */}
       {/* </figure> */}
       <div className="card-body ">
         <h2 className="card-title">
@@ -81,19 +78,22 @@ const Card = ({ recipe, bg, badge }) => {
 
         {/* dynamic kitchen name */}
         <p>{recipe.strArea}</p>
-        <div className={`flex card-actions justify-start pt-2`}>
+        <div className={`flex card-actions justify-end pt-2`}>
           <div
-            className={`badge  ${badge} badge-ghost badge-lg border-gray-600 rounded-md text-xs`}
+            className={`badge bg-slate-100 badge-ghost badge-lg  rounded-md text-xs cursor-pointer shadow-sm shadow-gray-900 hover:scale-105`}
+            onClick={() => setShowRecipe(!showRecipe)}
           >
-            <button onClick={() => setShowRecipe(!showRecipe)}>Read Recipe</button>
+            <button className="p-1">Read Recipe</button>
           </div>
           <div
-            className={`badge ${badge} badge-ghost badge-lg border-gray-600 rounded-md text-xs`}
+            className={`badge bg-slate-100 badge-ghost badge-lg rounded-md text-xs
+            cursor-pointer shadow-sm shadow-gray-900 hover:scale-105`}
+            onClick={() => window.open(recipe.strYoutube, "_blank")}
           >
                 <a href={recipe.strYoutube} 
                   target="_blank"
                   className="relative"> 
-                  <button>Watch Video</button>
+                  <button className="p-1">Watch Video</button>
                 </a>
           </div>
         </div>
